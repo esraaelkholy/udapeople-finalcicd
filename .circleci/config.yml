@@ -158,6 +158,7 @@ jobs:
           command: |
             exit 0
             cd backend
+            npm install
             npm run test
             
   scan-frontend:
