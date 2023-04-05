@@ -279,11 +279,11 @@ jobs:
 
   deploy-frontend:
     docker:
-      - image: cimg/base:stable
+      - image: mareimorsy/aws-node
     steps:
       - checkout
-      - install_awscli
-      - install_nodejs
+#      - install_awscli
+#      - install_nodejs
     #  - install_ansible
       - restore_cache:
           keys: [frontend-deps]
@@ -317,12 +317,12 @@ jobs:
                     
   deploy-backend:
     docker:
-      - image: cimg/base:stable
+      - image:  mareimorsy/aws-node
     steps:
       - checkout
-      - install_awscli
-      - install_ansible
-      - install_nodejs 
+#      - install_awscli
+#      - install_ansible
+#      - install_nodejs 
      # - install_dependencies             
       - add_ssh_keys:
           fingerprints: ["c0:60:fb:8a:37:49:34:fb:f4:b3:80:ad:1d:89:73:1d"]
@@ -368,7 +368,6 @@ jobs:
       - image: amazon/aws-cli
     steps:
       - checkout
-      - install_awscli
       - install_nodejs
       - run:
           name: Backend smoke test.
@@ -411,8 +410,6 @@ jobs:
       - image: mareimorsy/aws-node
     steps:
       - checkout
-      - install_awscli
-      - install_nodejs
       - run:
           name: Save Old workflow ID
           command: |
@@ -438,8 +435,6 @@ jobs:
       - image: mareimorsy/aws-node
     steps:
       - checkout
-      - install_awscli
-      - install_nodejs
       - run:
           name: Remove old stacks
           command: |
@@ -459,32 +454,32 @@ jobs:
 workflows:
   default:
     jobs:
-#      - build-frontend
-#      - build-backend
-#      - test-frontend:
-#          requires: [build-frontend]
-#      - test-backend:
-#          requires: [build-backend]
-#      - scan-backend:
-#          requires: [build-backend]
-#      - scan-frontend:
-#          requires: [build-frontend]
-#      - deploy-infrastructure:
-#          requires: [test-frontend, test-backend, scan-frontend, scan-backend]
-#          filters:
-#            branches:
-#              only: [main]
-#      - configure-infrastructure:
-#          requires: [deploy-infrastructure]
-      - run-migrations
-      #     requires: [configure-infrastructure]
-      # - deploy-frontend:
-      #     requires: [run-migrations]
-      # - deploy-backend:
-      #     requires: [run-migrations]
-      # - smoke-test:
-      #     requires: [deploy-backend, deploy-frontend]
-      # - cloudfront-update:
-      #     requires: [smoke-test]
-      # - cleanup:
-      #     requires: [cloudfront-update]
+      - build-frontend
+      - build-backend
+      - test-frontend:
+          requires: [build-frontend]
+      - test-backend:
+          requires: [build-backend]
+      - scan-backend:
+          requires: [build-backend]
+      - scan-frontend:
+          requires: [build-frontend]
+      - deploy-infrastructure:
+          requires: [test-frontend, test-backend, scan-frontend, scan-backend]
+          filters:
+            branches:
+              only: [main]
+      - configure-infrastructure:
+          requires: [deploy-infrastructure]
+      - run-migrations:
+          requires: [configure-infrastructure]
+      - deploy-frontend:
+          requires: [run-migrations]
+      - deploy-backend:
+          requires: [run-migrations]
+      - smoke-test:
+          requires: [deploy-backend, deploy-frontend]
+      - cloudfront-update:
+          requires: [smoke-test]
+      - cleanup:
+          requires: [cloudfront-update]
