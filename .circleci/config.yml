@@ -250,7 +250,7 @@ jobs:
             ansible-playbook -i inventory.txt configure-server.yml -vv
           # ansible-playbook -i inventory.txt prometheus-exporter.yml -vv
       # Here's where you will add some code to rollback on failure      
-      - destroy-environment     
+      # - destroy-environment     
 
   run-migrations:
     docker: 
@@ -311,8 +311,8 @@ jobs:
             tar -czvf artifact-"${CIRCLE_WORKFLOW_ID:0:7}".tar.gz dist
             aws s3 cp dist s3://udapeople-${CIRCLE_WORKFLOW_ID:0:7} --recursive
 
-      - destroy-environment  
-      - revert-migrations   
+      # - destroy-environment  
+      # - revert-migrations   
       # Here's where you will add some code to rollback on failure      
                     
   deploy-backend:
@@ -366,17 +366,16 @@ jobs:
       - run:
           name: Backend smoke test.
           command: |
-            BACKEND_IP=$(aws ec2 describe-instances --filters "Name=tag:Name,Values=backend-${CIRCLE_WORKFLOW_ID:0:7}" \
-              --query=Reservations[].Instances[].PublicIpAddress --output text)
-            export API_URL="http://${BACKEND_IP}:3030"
-            # URL="http://g00gle.com"
-            echo "${API_URL}"
-            if curl -s "${API_URL}/api/status" | grep "ok"
+            export BACKEND_PUBLIC_IP=$(aws ec2 describe-instances --region us-east-1 --query 'Reservations[*].Instances[*].PublicIpAddress' --output text)
+            
+            URL="http://$BACKEND_PUBLIC_IP:3030/api/status"
+
+            if curl -s --head ${URL}
             then
               echo "It worked!"
               exit 0
             else
-              echo "It failed!"
+              echo "Rolling Back"
               exit 1
             fi
 
@@ -396,8 +395,8 @@ jobs:
 
       - notify_on_failure
       - notify_on_success
-      - destroy-environment
-      - revert-migrations       
+      # - destroy-environment
+      # - revert-migrations       
 
   cloudfront-update:
     docker:
