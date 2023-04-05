@@ -254,7 +254,7 @@ jobs:
 
   run-migrations:
     docker: 
-      - image: cimg/base:stable
+      - image: mareimorsy/aws-node
     steps:
       - checkout
       - install_awscli
