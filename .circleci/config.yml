@@ -198,7 +198,7 @@ jobs:
     steps:
       - checkout
       - install_awscli
-      - install_dependencies
+     # - install_dependencies
 
       - run:
            name: Ensure back-end infrastructure exists
@@ -225,16 +225,16 @@ jobs:
           paths:
             - project/.circleci/ansible/inventory.txt
       # - destroy_environment
-      - notify_on_failure      
+      # - notify_on_failure      
 
   configure-infrastructure:
     docker:
-      - image: cimg/base:stable
+      - image: mareimorsy/aws-node
     steps:
       - checkout
-      - install_awscli
+    #  - install_awscli
       - install_ansible
-      - install_dependencies            
+    #  - install_dependencies            
       - add_ssh_keys:
           fingerprints: ["c0:60:fb:8a:37:49:34:fb:f4:b3:80:ad:1d:89:73:1d"]
       - attach_workspace:
@@ -254,10 +254,10 @@ jobs:
 
   run-migrations:
     docker: 
-      - image: cimg/node:13.8.0
+      - image: mareimorsy/aws-node
     steps:
       - checkout
-      - install_awscli
+    #  - install_awscli
             
       - run:
           name: Run migrations
@@ -438,7 +438,7 @@ jobs:
 
   cleanup:
     docker:
-      - image: cimg/base:stable
+      - image: mareimorsy/aws-node
     steps:
       - checkout
       - install_awscli
