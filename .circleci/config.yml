@@ -194,7 +194,7 @@ jobs:
 
   deploy-infrastructure:
     docker:
-        - image: cimg/node:13.8.0
+      - image: amazon/aws-cli
     steps:
       - checkout
       - install_awscli
@@ -224,7 +224,8 @@ jobs:
           root: ~/
           paths:
             - project/.circleci/ansible/inventory.txt
-      # - destroy_environment      
+      # - destroy_environment
+      - notify_on_failure      
 
   configure-infrastructure:
     docker:
