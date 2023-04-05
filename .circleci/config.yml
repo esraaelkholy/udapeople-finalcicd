@@ -257,7 +257,7 @@ jobs:
       - image: mareimorsy/aws-node
     steps:
       - checkout
-      - install_awscli
+#      - install_awscli
       - run:
           name: Run migrations
           command: |
