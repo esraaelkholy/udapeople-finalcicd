@@ -26,10 +26,7 @@
     state: latest
     update_cache: yes
 
-- name: "Add Node.js from Nodesource"
-  become: true
-  shell: |
-    curl -fsSL https://deb.nodesource.com/setup_13.x | sudo -E bash -
+
 
 - name: "Install Node.js 16"
   become: true
