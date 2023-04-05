@@ -197,8 +197,8 @@ jobs:
       - image: amazon/aws-cli
     steps:
       - checkout
-      - install_awscli
-     # - install_dependencies
+    #  - install_awscli
+      - install_dependencies
 
       - run:
            name: Ensure back-end infrastructure exists
