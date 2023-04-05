@@ -232,7 +232,7 @@ jobs:
       - image: cimg/base:stable
     steps:
       - checkout
-    #  - install_awscli
+      - install_awscli
       - install_ansible
     #  - install_dependencies            
       - add_ssh_keys:
@@ -254,10 +254,10 @@ jobs:
 
   run-migrations:
     docker: 
-      - image: mareimorsy/aws-node
+      - image: cimg/node:13.8.0
     steps:
       - checkout
-    #  - install_awscli
+      - install_awscli
             
       - run:
           name: Run migrations
@@ -282,12 +282,12 @@ jobs:
 
   deploy-frontend:
     docker:
-      - image: mareimorsy/aws-node
+      - image: cimg/base:stable
     steps:
       - checkout
       - install_awscli
       - install_nodejs
-      - install_ansible
+    #  - install_ansible
       - restore_cache:
           keys: [frontend-deps]
       - attach_workspace:
@@ -320,19 +320,19 @@ jobs:
                     
   deploy-backend:
     docker:
-      - image: mareimorsy/aws-node
+      - image: cimg/base:stable
     steps:
       - checkout
       - install_awscli
       - install_ansible
       - install_nodejs 
-      - install_dependencies             
+     # - install_dependencies             
       - add_ssh_keys:
           fingerprints: ["c0:60:fb:8a:37:49:34:fb:f4:b3:80:ad:1d:89:73:1d"]
       - attach_workspace:
            at: ~/
       - restore_cache:
-          keys: [backend-deps]
+          keys: [backend-build]
       - run:
           name: Install dependencies
           command: |
