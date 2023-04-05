@@ -26,7 +26,6 @@
     state: latest
     update_cache: yes
 
----
 - name: "Add Node.js from Nodesource"
   become: true
   shell: |
