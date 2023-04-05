@@ -257,15 +257,14 @@ jobs:
       - image: cimg/node:13.8.0
     steps:
       - checkout
-      - install_awscli
-            
+      - install_awscli    
       - run:
           name: Run migrations
           command: |
             export TYPEORM_HOST=$(aws ec2 describe-instances --region us-east-1 --query 'Reservations[*].Instances[*].PublicIpAddress' --output text)
             cd backend
             npm install
-           # npm run premigrations
+          # npm run premigrations
             npm run migrations > migrations_dump.txt
       - run:
           name: Send migration results to kvdb.io
