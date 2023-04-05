@@ -326,8 +326,6 @@ jobs:
      # - install_dependencies             
       - add_ssh_keys:
           fingerprints: ["c0:60:fb:8a:37:49:34:fb:f4:b3:80:ad:1d:89:73:1d"]
-      - attach_workspace:
-           at: ~/
       - restore_cache:
           keys: [backend-build]
       - run:
@@ -338,8 +336,8 @@ jobs:
       - run:
           name: Deploy backend
           command: |
-            export TYPEORM_HOST=$(aws ec2 describe-instances --region us-east-1 --query 'Reservations[*].Instances[*].PublicIpAddress' --output text)
-            echo $TYPEORM_HOST >> .circleci/ansible/inventory.txt
+          #  export TYPEORM_HOST=$(aws ec2 describe-instances --region us-east-1 --query 'Reservations[*].Instances[*].PublicIpAddress' --output text)
+          #  echo $TYPEORM_HOST >> .circleci/ansible/inventory.txt
 
             cd backend
             npm i
@@ -360,8 +358,8 @@ jobs:
             cat inventory.txt
             ansible-playbook -i inventory.txt deploy-backend.yml
 
-      - destroy-environment  
-      - revert-migrations   
+      #- destroy-environment  
+      #- revert-migrations   
  
   smoke-test:
     docker:
