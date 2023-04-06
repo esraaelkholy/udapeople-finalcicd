@@ -1,1 +1,4 @@
 URL01 : https://github.com/esraaelkholy/udapeople-finalcicd\
+URL02 : http://udapeople-e23f456.s3-website-us-east-1.amazonaws.com
+URL03 :d38d122vk3huy6.cloudfront.net
+URL04 :http://44.204.91.0:3030
