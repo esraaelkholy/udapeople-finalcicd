@@ -388,7 +388,7 @@ jobs:
             fi
 
       - notify_on_failure
-      - notify_on_success
+      #- notify_on_success
       # - destroy-environment
       # - revert-migrations       
 
@@ -414,8 +414,8 @@ jobs:
               --parameter-overrides WorkflowID="${CIRCLE_WORKFLOW_ID:0:7}" \
               --stack-name InitialStack
 
-      - destroy-environment
-      - revert-migrations
+      #- destroy-environment
+      #- revert-migrations
 
   cleanup:
     docker:
