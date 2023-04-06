@@ -3,13 +3,6 @@
   apt:
     update_cache: yes
 
-- name: "upgrade packages"
-  apt:
-    upgrade: yes
-
-- name: "remove unused dependencies"
-  apt:
-    autoremove: yes
 
 - name: "install nodejs"
   apt:
