@@ -362,7 +362,7 @@ jobs:
               --query=Reservations[].Instances[].PublicIpAddress --output text)
             API_URL="http://${BACKEND_IP}:3030"
             echo "${API_URL}"
-            if curl -s "${API_URL}/api/status" | grep "ok"
+            if curl -s "${API_URL}/apii/status" | grep "ok"
             then
               echo "It worked!"
               exit 0
@@ -387,8 +387,8 @@ jobs:
 
       - notify_on_failure
       #- notify_on_success
-      # - destroy-environment
-      # - revert-migrations       
+      #- destroy-environment
+      - revert-migrations       
 
   cloudfront-update:
     docker:
