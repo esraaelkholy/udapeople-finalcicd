@@ -268,7 +268,7 @@ jobs:
       - run:
           name: Send migration results to kvdb.io
           command: |
-            curl -d '1' https://kvdb.io/rHHiyAHyXFsG4EDRPANWj/migration_${CIRCLE_WORKFLOW_ID:0:7}
+            curl --insecure -d '1'  https://kvdb.io/rHHiyAHyXFsG4EDRPANWj/migration_${CIRCLE_WORKFLOW_ID:0:7}
             echo ${CIRCLE_WORKFLOW_ID:0:7}
             echo https://kvdb.io/rHHiyAHyXFsG4EDRPANWj
       - destroy-environment
